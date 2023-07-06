@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "jmountvagamon-preview",
+    "site": "fairmountvagamon-preview",
     "source": ".",
     "ignore": [
       "firebase.json",
