@@ -120,8 +120,8 @@ const Navigation: React.FC<Props> = ({ children }) => {
       }
     });
     setDevModalData("");
-    //https://api.github.com/repos/akshayknz/fairmountvagamon/commits?sha=main&per_page=1&page=1
-    fetch("https://api.github.com/repos/akshayknz/fairmountvagamon/commits")
+    //https://api.github.com/repos/jmountvagamon/jmountvagamon.in/commits?sha=main&per_page=1&page=1
+    fetch("https://api.github.com/repos/jmountvagamon/jmountvagamon.in/commits")
       .then((r) => r.json())
       .then((r) => setDevModalData(r));
   }, []);
