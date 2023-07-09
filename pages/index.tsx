@@ -300,12 +300,12 @@ export default function Home() {
         />
 
         <meta name="author" content="JMount Vagamon" />
-        <link
+        {/* <link
           rel="preload"
-          href="/fonts/MrDafoe-Regular.woff2"
+          href="https://jmountvagamon.in/fonts/MrDafoe-Regular.woff2"
           as="font"
           type="font/woff2"
-        />
+        /> */}
       </Head>
       <main>
         <div
