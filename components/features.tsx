@@ -128,6 +128,7 @@ export default function FeaturesGrid({
         style={{
           lineHeight: "84px",
           fontFamily: mrDafoe.style.fontFamily,
+          fontWeight:"600",
           fontSize: "clamp(4rem, -1.5rem + 18vw, 6rem)",
         }}
       >

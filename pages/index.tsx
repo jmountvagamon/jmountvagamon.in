@@ -576,6 +576,7 @@ export default function Home() {
                 textAlign: "center",
                 fontFamily: mrDafoe.style.fontFamily,
                 fontSize: "clamp(4rem, -1.5rem + 18vw, 8rem)",
+                fontWeight:"600"
               }}
             >
               JMount
