@@ -1,12 +1,12 @@
 import { MantineTheme } from "@mantine/core";
-import { Mr_Dafoe } from "@next/font/google";
+import { Explora } from "@next/font/google";
 import { Open_Sans } from "@next/font/google";
 
 const sono = Open_Sans({
   subsets: ["latin"],
 });
 
-export const mrDafoe = Mr_Dafoe({
+export const mrDafoe = Explora({
   weight: ["400"],
   subsets: ["latin"],
 });

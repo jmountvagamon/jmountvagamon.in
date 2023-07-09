@@ -302,7 +302,7 @@ export default function Home() {
         <meta name="author" content="JMount Vagamon" />
         <link
           rel="preload"
-          href="https://jmountvagamon.in/fonts/MrDafoe-Regular.woff2"
+          href="/fonts/MrDafoe-Regular.woff2"
           as="font"
           type="font/woff2"
         />
