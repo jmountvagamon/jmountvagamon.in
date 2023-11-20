@@ -40,7 +40,7 @@ export default function Contact() {
     try {
       auth.signInWithPopup(provider).then((result) => {
         if (
-          result.user?.email != "jmountvagamonresort@gmail.com" &&
+          result.user?.email != "jmountvagamon@gmail.com" &&
           result.user?.email != "akshayakn6@gmail.com"
         ) {
           auth.signOut();
