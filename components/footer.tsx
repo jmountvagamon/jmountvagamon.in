@@ -14,6 +14,8 @@ import {
 } from "@tabler/icons";
 import Link from "next/link";
 
+const currentYear = new Date().getFullYear();
+
 const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: 20,
@@ -171,7 +173,7 @@ export default function FooterLinks({ data }: FooterLinksProps) {
       </Container>
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
-          © 2023 jmountvagamon.in | All rights reserved.
+          © {currentYear} jmountvagamon.in | All rights reserved.
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
