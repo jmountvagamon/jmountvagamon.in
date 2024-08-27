@@ -247,11 +247,10 @@ export function CarouselCard({ data }: CarouselCardProps) {
               ₹{data.price}
             </Text>
             <Text size="xl" span weight={500} color="dimmed">
-               + tax
+              {" "} + tax
             </Text>
             <Text span size="sm" color="dimmed">
-              {" "}
-              + tax per day
+              per day
             </Text>
           </div>
 
