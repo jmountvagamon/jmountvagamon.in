@@ -239,7 +239,7 @@ export default function Pages() {
               <NumberInput placeholder="Order" label="Order" withAsterisk {...form.getInputProps("order")} />
             </Grid.Col>
             <Grid.Col span={12}>
-              <Text>Images</Text>
+              <Text>Images (400px × 350px)</Text>
               <Box>
                 {images.map((e) => (
                   <ImageBlock data={e} key={e.name} controls images={images} setImages={setImages} />
