@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Analytics } from "@vercel/analytics/react";
 import {
   createStyles,
   Header,
