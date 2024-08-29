@@ -106,6 +106,8 @@ export function CarouselCard({ data }: CarouselCardProps) {
           <Carousel
             withIndicators
             my={20}
+            slideSize="40%"
+            slideGap="md"
             withControls={false}
             classNames={{
               root: classes.carousel,
@@ -114,8 +116,8 @@ export function CarouselCard({ data }: CarouselCardProps) {
             }}
           >
             {data?.images.map((e) => (
-              <Carousel.Slide key={e.name} style={{ background: `url(${e.url})`, backgroundSize: "cover" }}>
-                <Container size="md" py={"15%"} my={30}></Container>
+              <Carousel.Slide key={e.name}> 
+                <Image src={e.url} height={400}  style={{borderRadius:"5px", overflow:"hidden"}}/>
               </Carousel.Slide>
             ))}
           </Carousel>
