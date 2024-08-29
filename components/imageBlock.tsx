@@ -2,14 +2,17 @@ import { ActionIcon, Box, HoverCard, Image, Text } from "@mantine/core";
 import { IconSquarePlus, IconTrash } from "@tabler/icons";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import { storage } from "./data/firebaseConfig";
+import { deleteObject, getDownloadURL, ref } from "firebase/storage";
 interface ImageBlockProps {
   data: MediaProps;
   active?: string;
   controls: boolean;
   images: MediaProps[];
   setImages: Dispatch<SetStateAction<MediaProps[]>>;
+  setRefreshList?: Dispatch<SetStateAction<boolean>>;
 }
-export default function ImageBlock({ data, active, controls, images, setImages }: ImageBlockProps) {
+export default function ImageBlock({ data, active, controls, images, setImages, setRefreshList }: ImageBlockProps) {
   // function arraymove(arr: MediaProps[], fromIndex: number, toIndex: number) {
   //   var element = arr[fromIndex];
   //   arr.splice(fromIndex, 1);
@@ -26,13 +29,17 @@ export default function ImageBlock({ data, active, controls, images, setImages }
   //   setImages(temp);
   // };
   const trashThis = () => {
-    images.splice(images.findIndex((e) => e === data),1)
-    console.log(images,images.findIndex((e) => e === data),images.findIndex((e) => e === data)+1);
-    
-    let temp = [...images]
-    console.log([...images]);
-    
-    setImages(temp)
+    if(images.length>0) {
+      images.splice(images.findIndex((e) => e === data),1)
+      console.log(images,images.findIndex((e) => e === data),images.findIndex((e) => e === data)+1);
+      let temp = [...images]
+      console.log([...images]);
+      setImages(temp)
+    } else {
+      const desertRef = ref(storage, data.name);
+      deleteObject(desertRef).then(() => {}).catch((error) => {});
+      setRefreshList&&setRefreshList(true);
+    }
   };
   return (
     <Box style={{ height: 150, width: 123, overflow: "hidden", display: "inline-block" }} mt={15} p={9}>
@@ -79,19 +86,11 @@ export default function ImageBlock({ data, active, controls, images, setImages }
           >
             {data.url}
           </Text>
-          {controls && (
             <Box style={{ display: "flex", gap: 10 }} mt={10}>
-              {/* <ActionIcon color="blue" variant="light" onClick={moveLeft}>
-                <IconArrowLeft size={18} />
-              </ActionIcon>
-              <ActionIcon color="blue" variant="light" onClick={moveRight}>
-                <IconArrowRight size={18} />
-              </ActionIcon> */}
               <ActionIcon color="red" variant="light" onClick={trashThis}>
                 <IconTrash size={18} />
               </ActionIcon>
             </Box>
-          )}
         </HoverCard.Dropdown>
       </HoverCard>
     </Box>

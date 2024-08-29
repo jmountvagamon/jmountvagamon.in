@@ -15,7 +15,6 @@ export default function Media() {
         </Title>
         <MediaComponent
           selectImage={function (data: MediaProps): void {
-            throw new Error("Function not implemented.");
           }}
         />
       </Container>
