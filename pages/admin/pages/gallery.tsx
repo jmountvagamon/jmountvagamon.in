@@ -92,6 +92,7 @@ export default function Pages() {
         }
       }),
     })
+    setOpened(false);
   };
   return (
     <Navigation>

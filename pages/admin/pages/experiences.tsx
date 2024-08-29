@@ -128,6 +128,7 @@ export default function Pages() {
         },
       }),
     });
+    setOpened(false);
   };
   const rows = experience.map((e) => <Row key={e.id} data={e} handleEditAction={handleEditAction} />);
   return (
