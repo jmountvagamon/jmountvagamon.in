@@ -127,8 +127,8 @@ export default function Pages() {
               </Box>
             </Grid.Col>
             <Grid.Col span={12}>
-              <Group position="right" mt="md">
-                <Button type="submit">Submit</Button>
+              <Group position="left" mt="md">
+                <Button type="submit">Save Gallery</Button>
               </Group>
             </Grid.Col>
           </Grid>
