@@ -159,7 +159,7 @@ export default function MediaComponent({ selectImage }: MediaComponentProps) {
       <Text color="dimmed" size="sm">Hover for preview</Text>
       {filteredMediaData.length == 0 && <>
       {Array.from({length:20}).map((_,index)=>
-        <Skeleton visible={true} height={134} width={102} style={{display:"inline-block",margin:10}}>
+        <Skeleton visible={true} height={134} width={102} style={{display:"inline-block",margin:10}} key={index}>
       </Skeleton>
       )}
       </>}
