@@ -116,13 +116,13 @@ export default function Contact() {
             <>
               <Reveal keyframes={customAnimation} cascade duration={500} damping={0.3} triggerOnce={true}>
                 <Grid key={index} style={{ borderRadius: 10 }} p={20}>
-                  <Grid.Col xs={12} md={8} order={index % 2 == 0 ? 0 : 1}>
+                  <Grid.Col xs={12} md={8} order={mob? 1:index % 2 == 0 ? 0 : 1 } >
                     <Title order={3} weight={100} mb={15}>
                       {e.name}
                     </Title>
                     <Text size={"sm"} pr={desk?20:0}>{e.content}</Text>
                   </Grid.Col>
-                  <Grid.Col xs={12} md={4} order={index % 2 == 0 ? 1 : 0}>
+                  <Grid.Col xs={12} md={4} order={mob?0:index % 2 == 0 ? 1 : 0} mb={mob?20:0}>
                     <Reveal keyframes={customAnimation} cascade duration={1200} damping={0.3} triggerOnce={true}>
                       <div className={`polaroid-item  ${index % 2 == 0 ? "polaroid-right" : "polaroid-left"}`}>
                         <div className="polaroid-wrapper">
