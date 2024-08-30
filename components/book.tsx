@@ -547,6 +547,28 @@ export function BookingCard({
   useEffect(() => {
     dispatch(setCalculatedPrice());
   }, []);
+  useEffect(()=>{
+    if(success){
+      const values = {
+        email: selectedEmail,
+        name: selectedName,
+        phone: selectedPhone,
+        product: selectedProduct,
+        date: selectedDate,
+        numberOfOccupants: selectedNumberOfOccupants,
+        addons: selectedAddons,
+        notes: selectedNotes,
+        terms: selectedTerms,
+        id: selectedId,
+        price: calculatedPrice,
+        bookingId: bookingId,
+      }
+      fetch("/api/booking", {
+        method: "POST",
+        body: JSON.stringify(values),
+      })
+    }
+  },[success])
   return (
     <Box
       style={{
