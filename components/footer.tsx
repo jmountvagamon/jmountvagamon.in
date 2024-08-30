@@ -11,8 +11,13 @@ import {
   IconBrandInstagram,
   IconBrandWhatsapp,
   IconBrandFacebook,
+  IconBrandTwitter,
 } from "@tabler/icons";
+import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { CollectionName } from "./data/constants";
+import { db } from "./data/firebaseConfig";
 
 const currentYear = new Date().getFullYear();
 
@@ -127,6 +132,7 @@ interface FooterLinksProps {
 
 export default function FooterLinks({ data }: FooterLinksProps) {
   const { classes } = useStyles();
+  const [values, setValues] = useState<ContactData>();
 
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
@@ -148,6 +154,14 @@ export default function FooterLinks({ data }: FooterLinksProps) {
       </div>
     );
   });
+  useEffect(() => {
+    const run = async () => {
+      const docRef = doc(db, CollectionName.PAGES, "contacts");
+      const docSnap = await getDoc(docRef);
+      setValues({ ...docSnap.data() } as ContactData);
+    };
+    run();
+  }, []);
 
   return (
     <footer className={classes.footer}>
@@ -176,20 +190,44 @@ export default function FooterLinks({ data }: FooterLinksProps) {
           © {currentYear} jmountvagamon.in | All rights reserved.
         </Text>
 
-        <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon size="lg" component={Link} href="#">
-            <IconBrandWhatsapp size={18} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg" component={Link} href="#">
-            <IconBrandInstagram size={18} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg" component={Link} href="#">
-            <IconBrandFacebook size={18} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg" component={Link} href="#">
-            <IconBrandYoutube size={18} stroke={1.5} />
-          </ActionIcon>
-        </Group>
+        <Group mt="xl" className={classes.social}>
+                <ActionIcon
+                  component={Link}
+                  href={values?.twitter || ""}
+                  size={28}
+                  className={classes.social}
+                  variant="transparent"
+                >
+                  <IconBrandTwitter size={22} stroke={1.5} />
+                </ActionIcon>
+                <ActionIcon
+                  component={Link}
+                  href={values?.instagram || ""}
+                  size={28}
+                  className={classes.social}
+                  variant="transparent"
+                >
+                  <IconBrandInstagram size={22} stroke={1.5} />
+                </ActionIcon>
+                <ActionIcon
+                  component={Link}
+                  href={values?.facebook || ""}
+                  size={28}
+                  className={classes.social}
+                  variant="transparent"
+                >
+                  <IconBrandFacebook size={22} stroke={1.5} />
+                </ActionIcon>
+                <ActionIcon
+                  component={Link}
+                  href={values?.whatsapp || ""}
+                  size={28}
+                  className={classes.social}
+                  variant="transparent"
+                >
+                  <IconBrandWhatsapp size={22} stroke={1.5} />
+                </ActionIcon>
+              </Group>
       </Container>
     </footer>
   );
