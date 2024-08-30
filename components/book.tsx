@@ -20,7 +20,13 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { query, collection, getDocs, where } from "firebase/firestore";
-import { Dispatch, SetStateAction, forwardRef, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import { db } from "./data/firebaseConfig";
 import { CollectionName, CollectionStatus } from "./data/constants";
 import { RangeCalendar } from "@mantine/dates";
@@ -55,7 +61,7 @@ const SelectItem = forwardRef<HTMLDivElement, ProductPropsWithValue>(
     <div ref={ref} {...others}>
       <Group noWrap>
         <Avatar src={images ? images[0].url : ""} />
-        <Grid style={{width:"100%"}}>
+        <Grid style={{ width: "100%" }}>
           <Grid.Col span={8}>
             <Text size="sm">{name}</Text>
             <Text size="xs" opacity={0.65}>
@@ -63,7 +69,7 @@ const SelectItem = forwardRef<HTMLDivElement, ProductPropsWithValue>(
             </Text>
           </Grid.Col>
           <Grid.Col span={3}>
-            <Text size="lg" weight={100} style={{whiteSpace:"nowrap"}}>
+            <Text size="lg" weight={100} style={{ whiteSpace: "nowrap" }}>
               ₹ {others.price}
             </Text>
           </Grid.Col>
@@ -78,9 +84,12 @@ export default function Book({ noCheckButton }: { noCheckButton?: boolean }) {
   const theme = useMantineTheme();
   const dispatch = useDispatch();
   const { desk, tab, mob } = useViewport();
-  const { selectedProduct, selectedDate } = useSelector((state: RootState) => state.actions);
+  const { selectedProduct, selectedDate } = useSelector(
+    (state: RootState) => state.actions
+  );
   const [value, setValue] = useState<BookingDate>([null, null]);
-  const [selectedProductState, setSelectedProductState] = useState<ProductPropsWithValue>(selectedProduct);
+  const [selectedProductState, setSelectedProductState] =
+    useState<ProductPropsWithValue>(selectedProduct);
 
   useEffect(() => {
     dispatch(setSelectedDate(value));
@@ -115,7 +124,13 @@ export default function Book({ noCheckButton }: { noCheckButton?: boolean }) {
       </Grid.Col>
       {!noCheckButton && (
         <Grid.Col span={12} md={3}>
-          <Button rightIcon={<IconArrowRight strokeWidth={1}/>} fullWidth size={"md"} component={Link} href="/book">
+          <Button
+            rightIcon={<IconArrowRight strokeWidth={1} />}
+            fullWidth
+            size={"md"}
+            component={Link}
+            href="/book"
+          >
             Check availability
           </Button>
         </Grid.Col>
@@ -128,16 +143,21 @@ export function BookingProductsSelect({
   selectedProductState,
   setSelectedProductState,
   label,
-  description
+  description,
 }: {
   selectedProductState: ProductPropsWithValue;
   setSelectedProductState: Dispatch<SetStateAction<ProductPropsWithValue>>;
   label: string;
   description?: string;
 }) {
-  const [productData, setProductData] = useState<ProductPropsWithValue[]>([selectedProductState]);
+  const [productData, setProductData] = useState<ProductPropsWithValue[]>([
+    selectedProductState,
+  ]);
   useEffect(() => {
-    let queryy = query(collection(db, CollectionName.PRODUCTS), where("status", "==", true));
+    let queryy = query(
+      collection(db, CollectionName.PRODUCTS),
+      where("status", "==", true)
+    );
     let data: any[] = [];
     getDocs(queryy).then((productsSnapshot) => {
       let queryData = productsSnapshot.docs.map(
@@ -171,7 +191,6 @@ export function BookingProductsSelect({
         item.label?.toLowerCase().includes(value.toLowerCase().trim()) ||
         item.description.toLowerCase().includes(value.toLowerCase().trim())
       }
-      
     />
   );
 }
@@ -218,9 +237,13 @@ export function BookSecondStep() {
       <Grid.Col span={12} sm={7}>
         <Text size={"md"}>Addons</Text>
         <Text size={"xs"} color="dimmed">
-          Select from the following addons to make your experience at JMount better
+          Select from the following addons to make your experience at JMount
+          better
         </Text>
-        <BookingAddonsSelector selectedAddons={selectedAddonsState} addonChangeHandler={setSelectedAddonsState} />
+        <BookingAddonsSelector
+          selectedAddons={selectedAddonsState}
+          addonChangeHandler={setSelectedAddonsState}
+        />
         <Text size={"xs"} color="dimmed">
           Additional charges apply
         </Text>
@@ -311,7 +334,10 @@ export function BookThirdStep() {
         <Title order={5} className={classes.heading}>
           Confirm your reservation
         </Title>
-        <Text>Here&apos;s a summary of all the selections you made on the previous steps.</Text>
+        <Text>
+          Here&apos;s a summary of all the selections you made on the previous
+          steps.
+        </Text>
         <BookingCard success={false} />
       </Grid.Col>
     </Grid>
@@ -330,16 +356,22 @@ export function BookSuccess() {
         <Text color="dimmed">
           Reservation ID: <strong>{selectedId.toUpperCase()}</strong>
         </Text>
-        <BookingCard success={true} />
+        <BookingCard success={true} bookingId={selectedId.toUpperCase()} />
         <Text mb={15}>
-          We have recieved your reservation request and we will process the order as soon as possible. Expect a call
-          from JMount within 3-5 business days. For any enquiries contact us on the website / phone / WhatsApp lines.
-          We are ready to help.{" "}
+          We have recieved your reservation request and we will process the
+          order as soon as possible. Expect a call from JMount within 3-5
+          business days. For any enquiries contact us on the website / phone /
+          WhatsApp lines. We are ready to help.{" "}
           <Link href="/contact" style={{ textDecoration: "underline" }}>
             Contact Us
-          </Link>.
+          </Link>
+          .
         </Text>
-        <Button rightIcon={<IconArrowRight strokeWidth={1}/>} component={Link} href="/experiences">
+        <Button
+          rightIcon={<IconArrowRight strokeWidth={1} />}
+          component={Link}
+          href="/experiences"
+        >
           Explore Vagamon
         </Button>
         <Button component={Link} href="/contact" ml={10} variant="outline">
@@ -389,7 +421,8 @@ export function BookingDatePicker({
         let endDate = new Date(booking.endDate.toDate());
         while (startDate < endDate) {
           if (weight[startDate.toDateString()]) {
-            weight[startDate.toDateString()] = weight[startDate.toDateString()] + booking.nos;
+            weight[startDate.toDateString()] =
+              weight[startDate.toDateString()] + booking.nos;
           } else {
             weight[startDate.toDateString()] = booking.nos;
           }
@@ -420,19 +453,25 @@ export function BookingDatePicker({
     } else if (bookingData[date.toDateString()] > 10) {
       return (
         <Box>
-          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.3) }}>{date.getDate()}</Box>
+          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.3) }}>
+            {date.getDate()}
+          </Box>
         </Box>
       );
     } else if (bookingData[date.toDateString()] > 7) {
       return (
         <Box>
-          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.2) }}>{date.getDate()}</Box>
+          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.2) }}>
+            {date.getDate()}
+          </Box>
         </Box>
       );
     } else if (bookingData[date.toDateString()] > 5) {
       return (
         <Box>
-          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.1) }}>{date.getDate()}</Box>
+          <Box style={{ background: theme.fn.rgba(theme.colors.red[9], 0.1) }}>
+            {date.getDate()}
+          </Box>
         </Box>
       );
     } else {
@@ -440,7 +479,14 @@ export function BookingDatePicker({
     }
   }
   return (
-    <Popover opened={popoverOpened} trapFocus position="bottom" withArrow transition={"pop-top-left"} shadow="md">
+    <Popover
+      opened={popoverOpened}
+      trapFocus
+      position="bottom"
+      withArrow
+      transition={"pop-top-left"}
+      shadow="md"
+    >
       <Popover.Target>
         <div onFocusCapture={() => setPopoverOpened(true)}>
           <TextInput
@@ -476,7 +522,13 @@ export function BookingDatePicker({
   );
 }
 
-export function BookingCard({ success }: { success: boolean }) {
+export function BookingCard({
+  success,
+  bookingId,
+}: {
+  success: boolean;
+  bookingId?: string;
+}) {
   const {
     selectedEmail,
     selectedPhone,
@@ -487,49 +539,73 @@ export function BookingCard({ success }: { success: boolean }) {
     selectedAddons,
     selectedNotes,
     selectedTerms,
-    selectedId, calculatedPrice
+    selectedId,
+    calculatedPrice,
   } = useSelector((state: RootState) => state.actions);
   const dispatch = useDispatch();
   const theme = useMantineTheme();
-  useEffect(()=>{
-    dispatch(setCalculatedPrice())
-  },[])
+  useEffect(() => {
+    dispatch(setCalculatedPrice());
+  }, []);
   return (
     <Box
       style={{
         borderRadius: 12,
         border: "2px solid green",
         borderColor: success ? theme.colors.green[8] : theme.colors.dark[2],
-        background: success ? theme.fn.rgba(theme.colors.green[1], 0.3) : theme.fn.rgba(theme.colors.dark[1], 0.1),
+        overflow: "hidden",
+        position: "relative",
+        background: success
+          ? theme.fn.rgba(theme.colors.green[1], 0.3)
+          : theme.fn.rgba(theme.colors.dark[1], 0.1),
       }}
       py={30}
-      className={`${success&&"booking-confirmed-card"} booking-card`}
+      className={`${success && "booking-confirmed-card"} booking-card`}
       px={40}
       my={20}
     >
+      
       <Box style={{ display: "flex", alignItems: "center", gap: "13px" }}>
         <Title order={5} pb={5}>
           {selectedProduct.name}
         </Title>
-        <Badge color={success ? "green" : "gray"}>{success ? "Confirmed" : "To be confirmed"}</Badge>
+        <Badge color={success ? "green" : "gray"}>
+          {success ? "Confirmed" : "To be confirmed"}
+        </Badge>
       </Box>
       <Text color="dimmed">
-        {selectedNumberOfOccupants[0]} Adults and {selectedNumberOfOccupants[1]} Children, from{" "}
-        {dayjs(selectedDate[0]).format("MMM DD")}
+        {selectedNumberOfOccupants[0]} Adults and {selectedNumberOfOccupants[1]}{" "}
+        Children, from {dayjs(selectedDate[0]).format("MMM DD")}
         &nbsp;to {dayjs(selectedDate[1]).format("MMM DD, YYYY")}
       </Text>
       <Text>
-        Reservation {success ? null : "to be"} made in the name of {selectedName} ({selectedPhone || selectedEmail})
+        Reservation {success ? null : "to be"} made in the name of{" "}
+        {selectedName} ({selectedPhone || selectedEmail})
       </Text>
       <Text align="right" color="dimmed" mt="md">
-        Product and Service Price{" "}
-      </Text>
-      <Text align="right" color="dimmed">
-        + addons added
+        Product + service price + addons added
       </Text>
       <Title align="right" order={5} weight={100}>
         ₹{calculatedPrice}
       </Title>
+      <Text align="right" color="dimmed">
+        + applicable taxes
+      </Text>
+      <Text
+        color="dimmed"
+        size="sm"
+        weight={100}
+        align="right"
+        style={{
+          position: "absolute",
+          fontSize: "13vw",
+          bottom: "-100px",
+          left: "-3%",
+          opacity: ".1",
+        }}
+      >
+        {bookingId}
+      </Text>
     </Box>
   );
 }
@@ -583,7 +659,12 @@ export function BookingAdultChildrenSelector({
     setValue(`${adults} adults, ${childrenCount} children`);
   }, [childrenCount, adults]);
   return (
-    <Popover opened={popoverOpened} position="bottom" width="target" transition="pop">
+    <Popover
+      opened={popoverOpened}
+      position="bottom"
+      width="target"
+      transition="pop"
+    >
       <Popover.Target>
         <div onFocusCapture={() => setPopoverOpened(true)}>
           <TextInput
@@ -606,7 +687,13 @@ export function BookingAdultChildrenSelector({
               <Box>
                 <Button
                   variant="default"
-                  style={{ borderRadius: 100, height: 26, width: 26, padding: 0, margin: "0 7px 0 7px" }}
+                  style={{
+                    borderRadius: 100,
+                    height: 26,
+                    width: 26,
+                    padding: 0,
+                    margin: "0 7px 0 7px",
+                  }}
                   onClick={decrementAdults}
                 >
                   -
@@ -616,7 +703,13 @@ export function BookingAdultChildrenSelector({
                 </Text>
                 <Button
                   variant="default"
-                  style={{ borderRadius: 100, height: 26, width: 26, padding: 0, margin: "0 7px 0 7px" }}
+                  style={{
+                    borderRadius: 100,
+                    height: 26,
+                    width: 26,
+                    padding: 0,
+                    margin: "0 7px 0 7px",
+                  }}
                   onClick={incrementAdults}
                 >
                   +
@@ -628,7 +721,13 @@ export function BookingAdultChildrenSelector({
               <Box>
                 <Button
                   variant="default"
-                  style={{ borderRadius: 100, height: 26, width: 26, padding: 0, margin: "0 7px 0 7px" }}
+                  style={{
+                    borderRadius: 100,
+                    height: 26,
+                    width: 26,
+                    padding: 0,
+                    margin: "0 7px 0 7px",
+                  }}
                   onClick={decrementChildren}
                 >
                   -
@@ -638,7 +737,13 @@ export function BookingAdultChildrenSelector({
                 </Text>
                 <Button
                   variant="default"
-                  style={{ borderRadius: 100, height: 26, width: 26, padding: 0, margin: "0 7px 0 7px" }}
+                  style={{
+                    borderRadius: 100,
+                    height: 26,
+                    width: 26,
+                    padding: 0,
+                    margin: "0 7px 0 7px",
+                  }}
                   onClick={incrementChildren}
                 >
                   +
@@ -666,14 +771,21 @@ export function BookingAddonsSelector({
   const { classes, cx } = useStyles();
   useEffect(() => {
     //get addons
-    let queryy = query(collection(db, CollectionName.ADDONS), where("status", "==", true));
+    let queryy = query(
+      collection(db, CollectionName.ADDONS),
+      where("status", "==", true)
+    );
     let data: any[] = [];
     getDocs(queryy).then((addonsSnapshot) => {
       let queryData = addonsSnapshot.docs.map(
-        (addon) => Object.assign({ ...addon.data() }, { id: addon.id }) as unknown as AddonProps
+        (addon) =>
+          Object.assign(
+            { ...addon.data() },
+            { id: addon.id }
+          ) as unknown as AddonProps
       );
       setAddons(queryData); //set addons for component
-      dispatch(setAddonsData(queryData)) //set addons for redux price calculation
+      dispatch(setAddonsData(queryData)); //set addons for redux price calculation
     });
   }, []);
   return (
@@ -689,12 +801,18 @@ export function BookingAddonsSelector({
     >
       {addons?.map((e) => (
         <Chip value={e.id} size="xs" key={e.id}>
-          {e.name} {e.price? `: ₹${e.price}`:""}
+          {e.name} {e.price ? `: ₹${e.price}` : ""}
         </Chip>
       ))}
       {!addons &&
         [1, 2, 2.5, 3.3].map((e) => (
-          <Skeleton height={26} width={`${e * 10}%`} style={{ display: "inline-block" }} radius="xl" key={e} />
+          <Skeleton
+            height={26}
+            width={`${e * 10}%`}
+            style={{ display: "inline-block" }}
+            radius="xl"
+            key={e}
+          />
         ))}
     </Chip.Group>
   );
