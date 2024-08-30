@@ -56,14 +56,14 @@ const SelectItem = forwardRef<HTMLDivElement, ProductPropsWithValue>(
       <Group noWrap>
         <Avatar src={images ? images[0].url : ""} />
         <Grid style={{width:"100%"}}>
-          <Grid.Col span={10}>
+          <Grid.Col span={8}>
             <Text size="sm">{name}</Text>
             <Text size="xs" opacity={0.65}>
               {shortDescription}
             </Text>
           </Grid.Col>
-          <Grid.Col span={2}>
-            <Text size="lg" weight={100}>
+          <Grid.Col span={3}>
+            <Text size="lg" weight={100} style={{whiteSpace:"nowrap"}}>
               ₹ {others.price}
             </Text>
           </Grid.Col>
@@ -171,6 +171,7 @@ export function BookingProductsSelect({
         item.label?.toLowerCase().includes(value.toLowerCase().trim()) ||
         item.description.toLowerCase().includes(value.toLowerCase().trim())
       }
+      
     />
   );
 }
